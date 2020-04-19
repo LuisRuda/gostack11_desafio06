@@ -27,14 +27,16 @@ class CreateTransactionService {
       throw new AppError('Withdrawal amount greater than account balance');
     }
 
-    const categoriesRepository = getCustomRepository(CategoriesRepository);
+    const categoriesRepository = await getCustomRepository(
+      CategoriesRepository,
+    );
 
     const categoryAlreadyExist = await categoriesRepository.findOne({
       where: { title: category },
     });
 
     if (categoryAlreadyExist) {
-      const transaction = transactionsRepository.create({
+      const transaction = await transactionsRepository.create({
         title,
         value,
         type,
@@ -52,7 +54,7 @@ class CreateTransactionService {
 
     await categoriesRepository.save(newCategory);
 
-    const transaction = transactionsRepository.create({
+    const transaction = await transactionsRepository.create({
       title,
       value,
       type,
