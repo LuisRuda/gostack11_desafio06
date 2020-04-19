@@ -16,13 +16,13 @@ class TransactionsRepository extends Repository<Transaction> {
     const income = transactions
       .filter(({ type }) => type === 'income')
       .reduce((total, value) => {
-        return total + value.value;
+        return Number(total) + Number(value.value);
       }, 0);
 
     const outcome = transactions
       .filter(({ type }) => type === 'outcome')
       .reduce((total, value) => {
-        return total + value.value;
+        return Number(total) + Number(value.value);
       }, 0);
 
     return {
