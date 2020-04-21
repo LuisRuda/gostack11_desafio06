@@ -29,16 +29,16 @@ class ImportTransactionsService {
 
     const transactions: Transaction[] = [];
 
-    await transactionsImported.map(async transaction => {
-      const transactionSaved = await createTransaction.execute({
-        title: transaction.title,
-        value: transaction.value,
-        type: transaction.type,
-        category: transaction.category.trim(),
-      });
-
-      transactions.push(transactionSaved);
-    });
+    for (const transaction of transactionsImported) {
+      transactions.push(
+        await createTransaction.execute({
+          title: transaction.title,
+          value: transaction.value,
+          type: transaction.type,
+          category: transaction.category.trim(),
+        }),
+      );
+    }
 
     return transactions;
   }
